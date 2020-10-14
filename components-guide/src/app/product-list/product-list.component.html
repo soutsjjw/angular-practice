@@ -1,0 +1,154 @@
+<p>product-list works!</p>
+
+<button class="accordion">1、插值表達式</button>
+<div class="panel">
+
+    <p>title: {{title}}</p>
+
+    <p>1+2+3+4+5={{1+2+3+4+5}}</p>
+
+</div>
+
+<button class="accordion">2、模板綁定語法</button>
+<div class="panel">
+
+    <h3>2.1、從數據源到視圖</h3>
+
+    <p>
+        <a href='{{url}}'>使用插值表達式進行綁定</a>
+    </p>
+    <p>
+        <a [href]='url' [style.color]='fontColor'>使用 [] 進行綁定</a>
+    </p>
+    <p>
+        <a bind-href='url'>使用 bind 進行綁定</a>
+    </p>
+
+    <h3>2.2、從視圖到數據源</h3>
+
+    <p>
+        <button (click)="getUser()">使用 () 進行綁定</button>
+    </p>
+    <p>
+        <button on-click="getUser()">使用 on 進行綁定</button>
+    </p>
+
+    <h3>2.3、數據雙向綁定 --- 需要在 AppModule 中添加對於 FormsModule 的引用</h3>
+
+    <p>
+        <input type="text" id="userName" [(ngModel)]="name">
+    </p>
+    <p>
+        <input type="text" bindon-ngModel="name">
+    </p>
+
+</div>
+
+<button class="accordion">3、事件綁定</button>
+<div class="panel">
+
+    <input type="text" (keyup)="getMsg($event)">
+    <p>輸入的值： {{msg}}</p>
+
+    <input type="text" #refMsgInput (keyup)="getRefMsg(refMsgInput.value)">
+    <p>通過模板引入變量的方式獲取到輸入的值：{{refMsg}}</p>
+
+    <!--
+    <input type="text" ref-refMsgInput (keyup)="getRefMsg(refMsgInput.value)">
+    <p>通過模板引入變量的方式獲取到輸入的值：{{refMsg}}</p>
+    -->
+
+</div>
+
+<button class="accordion">4、指令</button>
+<div class="panel">
+
+    <h3>4.1、屬性型指令</h3>
+
+    <p [ngClass]="inlineStyle">NgClass 屬性指令</p>
+
+    <p [ngStyle]="currentStyles">NgStyle 屬性指令</p>
+
+    <h3>4.2、結構型指令</h3>
+
+    <p *ngIf="flag">NgIf 結構型指令</p>
+    <button (click)="removeElement()">移除元素</button>
+
+    <p>不使用 trackBy 跟蹤屬性</p>
+    <div>
+        <p *ngFor="let item of products; let i = index;">
+            {{i+1}} - {{item.name}} --- {{item.price}}
+        </p>
+    </div>
+    <p>使用 trackBy 跟蹤屬性</p>
+    <div>
+        <p *ngFor="let item of products; let i = index; trackBy: trackByIndex">
+            {{i+1}} - {{item.name}} --- {{item.price}}
+        </p>
+    </div>
+    <button (click)="addProduct()">新增</button>
+
+    <p>
+        請選擇配置
+        <select [(ngModel)]="config">
+            <option value="">請選擇</option>
+            <option value="r7-3700x">AMD Ryzen 7 3700X</option>
+            <option value="i5-9400f">Intel i5 9400F</option>
+            <option value="i5-9600kf">Intel i5 9600KF</option>
+        </select>
+    </p>
+    <p> 配置描述 </p>
+    <div [ngSwitch]="config">
+        <p *ngSwitchCase="'r7-3700x'">
+            一個能打得都木的~~~
+        </p>
+        <p *ngSwitchCase="'i5-9400f'">
+            擠牙膏的。。。
+        </p>
+        <p *ngSwitchCase="'i5-9600kf'">
+            別看了，我不是開封菜。。。
+        </p>
+        <p *ngSwitchDefault>
+            你選一個啊~~~
+        </p>
+    </div>
+
+</div>
+
+<button class="accordion">5、模板表達式運算符</button>
+<div class="panel">
+
+    <h3>5.1、管道運算符</h3>
+
+    <div>
+        <p>產品信息 json 字符串</p>
+        {{products | json}}
+    </div>
+
+    <h3>5.2、安全導航運算符</h3>
+
+    <p>第五個專案的名稱為：{{products[5]?.name}}</p>
+
+    <h3>5.3、非空斷言運算符</h3>
+    <p *ngIf="obj">
+        <span>{{obj!.name}}</span>
+    </p>
+
+</div>
+
+<button class="accordion">6、管道</button>
+<div class="panel">
+
+    <h3>6.1、json 管道</h3>
+    <p>{{products | json}}</p>
+
+    <h3>6.2、date 管道</h3>
+    <p>現在時間：{{date | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+
+    <h3>6.3、upper 管道</h3>
+    <p>轉換成全大寫：{{url | uppercase}}</p>
+
+    <h3>6.4、lower 管道</h3>
+    <p>轉換成全小寫：{{url | lowercase}}</p>
+
+</div>

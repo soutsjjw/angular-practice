@@ -1,0 +1,59 @@
+<h2>父組件內容：</h2>
+
+<p>
+    <label for="title">標題：</label>
+    <input type="text" name="title" id="title" [(ngModel)]="title">
+</p>
+
+<h2>子組件內容</h2>
+
+<!--
+    將父組件的數據綁定到子組件上
+-->
+<app-child-component [parentTitle]="title" [parentGetMsg]='getMsg'></app-child-component>
+
+<hr>
+
+<h3>1、使用 @ViewChild 裝飾器獲取子組件數據</h3>
+
+<p>
+    <button (click)="getChildMsg()">獲取子組件的 msg 數據</button>
+</p>
+
+<p>
+    <button (click)="runChildFunc()">調用子組件的方法</button>
+</p>
+
+<h2>子組件內容：</h2>
+
+<!--
+    在子組件上定義一個模板引用變量
+-->
+<app-child-component1 #childComponent></app-child-component1>
+
+<hr>
+
+<h3>2、使用 @Output 裝飾器配合 EventEmitter 獲取子組件數據</h3>
+
+<p>{{childMsg}}</p>
+
+<h2>子組件內容：</h2>
+
+<!--
+  將子組件的事件廣播綁定到父組件事件上
+ -->
+<app-child-component2 (childEmitter)='childEmitMsg($event)'></app-child-component2>
+
+<hr>
+
+<h3>3、通過服務在屬性中共享數據</h3>
+
+<p>
+    修改服務中的數據值
+    <input type="text" [(ngModel)]="msg">
+    <button (click)="submit()">提交</button>
+</p>
+
+<p>服務中的數據：{{msg}}</p>
+
+<app-child-component3></app-child-component3>
