@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
 import { GetQuotesResponseModel } from '../interfaces/get-quotes-response-model';
 import { SetQuotesResponseModel } from '../interfaces/set-quotes-response-model';
@@ -25,7 +26,27 @@ export class AntiMotivationalQuotesServicesService {
    */
   getAntiMotivationalQuotes(): Observable<GetQuotesResponseModel> {
     return this.http.get<GetQuotesResponseModel>(environment.url)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        retry(3), // 重試三次
+        catchError(this.handleError)
+      );
+  }
+
+  /**
+   * 錯誤信息捕獲處理
+   * @param error 錯誤信息
+   */
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // 客戶端本身引起的錯誤信息
+      console.log(`客戶端錯誤：${error.error.message}`);
+    } else {
+      // 服務端返回的錯誤信息
+      console.log(`服務端錯誤：HTTP狀態碼。${error.status} \r\n 錯誤訊息：${JSON.stringify(error.error)}`);
+    }
+
+    // 反饋給用戶的錯誤信息（用於組件中使用 error 回調時的錯誤提示）
+    return throwError('不好的事情發生了，畢竟我們都有不順利的時候。。。');
   }
 
   /**

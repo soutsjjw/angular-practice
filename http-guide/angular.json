@@ -145,6 +145,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "http-guide"
+    }
+  },
+  "defaultProject": "http-guide",
+  "cli": {
+    "analytics": false
+  }
 }

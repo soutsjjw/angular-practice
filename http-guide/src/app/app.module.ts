@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import { AntiMotivationalQuotesComponent } from './anti-motivational-quotes/anti-motivational-quotes.component'
+import { FormsModule } from '@angular/forms';
+import { HttpInterceptorProviders } from './http-interceptors/http-interceptor-providers';
 
 @NgModule({
   declarations: [
@@ -15,9 +17,10 @@ import { AntiMotivationalQuotesComponent } from './anti-motivational-quotes/anti
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [HttpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
